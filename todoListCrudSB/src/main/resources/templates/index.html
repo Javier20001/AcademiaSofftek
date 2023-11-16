@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"> <!--importamos thymeleaf y le damos un referencia-->
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <title>Inicio</title>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg bg-light">
+        <div class="container-fluid">
+            <a class="navbar-brand btn btn-primary" th:href="@{/}">Inicio</a>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a th:href="@{/Agregar}" class="navbar-brand btn btn-success">Agregar</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <div class="row">
+        <div>
+            <div th:if="${tareas != null and !tareas.isEmpty()}" style="display: flex; margin: 20px"><!--preguntamos si la lista de tareas contiene algo -->
+                <table class="table" style="text-align: center;">
+                    <thead>
+                    <tr>
+                        <th scope="col">id</th>
+                        <th scope="col">nombre</th>
+                        <th scope="col">descripcion</th>
+                        <th scope="col">acciones</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="tarea : ${tareas}"><!--recorremos la lista de tareas-->
+                        <!-- es un for each -->
+                        <td scope="row" th:text="${tarea.getId()}">mostrar el id</td><!--mostramos el id de la tarea-->
+                        <td scope="row" th:text="${tarea.getNombre()}">>muestrar el nombre</td><!--mostramos el nombre de la tarea-->
+                        <td scope="row" th:text="${tarea.getDescripcion()}">mostrar el apellido</td><!--mostramos el apellido de la tarea-->
+                        <td scope="row">
+                            <div class="btn-action">
+                                <a th:href="@{/Modificar/__${tarea.getId}__}" class="btn btn-warning">Modificar</a><!--link que va a enviar el id al modificar del controlador-->
+                                <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#exampleModal">Eliminar</button><!--button que acciona el modal-->
+                                <!--Codigo del Modal "robado" de boostrap-->
+                                <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h1 class="modal-title fs-5" id="exampleModalLabel">Confirmar Eliminación</h1>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <p>Seguro que quieres eliminar la siguiente tarea:</p>
+                                                <h4 th:text="${tarea.getId()}"></h4><!--mostramos el id de la tarea en el modal-->
+                                                <h4 th:text="${tarea.getNombre()}"></h4><!--mostramos el nombre de la tarea en el modal-->
+                                                <h4 th:text="${tarea.getDescripcion()}"></h4><!--mostramos la descripcion de la tarea en el modal-->
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button><!--button que cierra el modal-->
+                                                <a th:href="@{/Eliminar/__${tarea.getId}__}" class="btn btn-danger">Eliminar</a><!--link que lleva un id al eliminar del controlador-->
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
+</body>
+</html>
