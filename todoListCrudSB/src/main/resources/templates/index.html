@@ -40,9 +40,9 @@
                         <td scope="row">
                             <div class="btn-action">
                                 <a th:href="@{/Modificar/__${tarea.getId}__}" class="btn btn-warning">Modificar</a><!--link que va a enviar el id al modificar del controlador-->
-                                <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#exampleModal">Eliminar</button><!--button que acciona el modal-->
+                                <button type="button" class="btn btn-danger" data-bs-toggle="modal" th:data-bs-target="'#exampleModal_' + ${tarea.getId()}">Eliminar</button><!--button que acciona el modal-->
                                 <!--Codigo del Modal "robado" de boostrap-->
-                                <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                <div class="modal fade" th:id="'exampleModal_' + ${tarea.getId()}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                     <div class="modal-dialog">
                                         <div class="modal-content">
                                             <div class="modal-header">
